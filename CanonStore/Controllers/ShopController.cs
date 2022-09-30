@@ -19,7 +19,7 @@ namespace CanonStore.Controllers
     public class ShopController : Controller
     {
         
-        trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+        db_CanonStoreEntities ctx = new db_CanonStoreEntities();
         // GET: Shop
         public ActionResult Index()
         {
@@ -55,7 +55,7 @@ namespace CanonStore.Controllers
                 if (Session["CustomerId"] != null)
                 {
                     int id = Convert.ToInt32(Session["CustomerId"]);
-                    Customer customer = ctx.Customers.Where(c => c.id == id).SingleOrDefault();
+                    Customer customer = ctx.Customers.Where(c => c.Id == id).SingleOrDefault();
                     List<Bill> bills = ctx.Bills.Where(b => b.IdCustomer == id).ToList();
                     ViewBag.cusBills = bills;
                     return View("AboutCustomer", customer);
@@ -81,18 +81,18 @@ namespace CanonStore.Controllers
                 {
                     try
                     {
-                        using (trangbaoduy2_OnlineCanonStoreEntities db = new trangbaoduy2_OnlineCanonStoreEntities())
+                        using (db_CanonStoreEntities db = new db_CanonStoreEntities())
                         {
                             Password EncryptData = new Password();
 
                             customerCheck.Password = EncryptData.Encode(customerCheck.Password);
-                            var obj = db.Emloyees.Where(a => a.UserName == customerCheck.UserName && a.Password == customerCheck.Password).FirstOrDefault();
+                            var obj = db.Employees.Where(a => a.UserName == customerCheck.UserName && a.Password == customerCheck.Password).FirstOrDefault();
 
                             if (obj != null)
                             {
-                                Session["EmloyeeId"] = obj.Id.ToString();
-                                Session["EmloyeeUserName"] = obj.UserName.ToString();
-                                Session["EmloyeeName"] = obj.Name.ToString();
+                                Session["EmployeeId"] = obj.Id.ToString();
+                                Session["EmployeeUserName"] = obj.UserName.ToString();
+                                Session["EmployeeName"] = obj.Name.ToString();
 
 
                                 return RedirectToAction("Index", "Products");
@@ -106,7 +106,7 @@ namespace CanonStore.Controllers
                     }
                     try
                     {
-                        using (trangbaoduy2_OnlineCanonStoreEntities db = new trangbaoduy2_OnlineCanonStoreEntities())
+                        using (db_CanonStoreEntities db = new db_CanonStoreEntities())
                         {
                             //Password EncryptData = new Password();
                             //customerCheck.Password = EncryptData.Encode(customerCheck.Password);
@@ -114,7 +114,7 @@ namespace CanonStore.Controllers
 
                             if (obj != null)
                             {
-                                Session["CustomerId"] = obj.id.ToString();
+                                Session["CustomerId"] = obj.Id.ToString();
                                 Session["CustomerUserName"] = obj.UserName.ToString();
                                 Session["CustomerName"] = obj.Name.ToString();
 
@@ -290,7 +290,7 @@ namespace CanonStore.Controllers
 
                         ViewBag.bill_Details = bill_Details;
 
-                        Customer customer = ctx.Customers.Where(c => c.id == bill.IdCustomer).SingleOrDefault();
+                        Customer customer = ctx.Customers.Where(c => c.Id == bill.IdCustomer).SingleOrDefault();
                         ViewBag.customer = customer;
                         return View(bill);
                     }
@@ -308,7 +308,7 @@ namespace CanonStore.Controllers
             {
                 if (Session["CustomerId"] != null)
                 {
-                    Customer customer = ctx.Customers.Where(c => c.id == id).FirstOrDefault();
+                    Customer customer = ctx.Customers.Where(c => c.Id == id).FirstOrDefault();
                     return View(customer);
                 }
                 else
@@ -328,7 +328,7 @@ namespace CanonStore.Controllers
             {
                 if (Session["CustomerId"] != null)
                 {
-                    Customer oldCustomer = ctx.Customers.Where(c => c.id == customer.id).SingleOrDefault();
+                    Customer oldCustomer = ctx.Customers.Where(c => c.Id == customer.Id).SingleOrDefault();
 
                     oldCustomer.Name = customer.Name;
                     oldCustomer.Phone = customer.Phone;
@@ -642,7 +642,7 @@ namespace CanonStore.Controllers
                     {
                         IdBill = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + "B" + countBill.ToString() + "C" + Session["CustomerId"],
                         IdCustomer = Convert.ToInt32(Session["CustomerId"]),
-                        IdEmloyee = 9,
+                        IdEmployee = 9,
                         Status = 1,
                         Date_Created = DateTime.Now.Date,
                         Total = total,

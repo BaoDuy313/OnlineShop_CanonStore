@@ -46,15 +46,15 @@
                     <td>@item.UserName</td>
                     <td>@item.DayOfBirth.Value.ToString("dd/MM/yyyy")</td>
                     <td>
-                        <a href="/Customer/Detail/@item.id">
+                        <a href="/Customers/Detail/@item.Id">
                             <i class="fa fa-list" aria-hidden="true"></i>
                         </a> |
-                        <a href="/Customer/Edit/@item.id">
+                        <a href="/Customers/Edit/@item.Id">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        </a> |
-                        <a href="/Customer/Delete/@item.id">
+                        </a> 
+                        @*<a href="/Customers/Delete/@item.Id">
                             <i class="fa fa-trash" aria-hidden="true"></i>
-                        </a>
+                        </a>*@
                     </td>
 
                 </tr>

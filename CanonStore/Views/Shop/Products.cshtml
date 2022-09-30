@@ -5,7 +5,7 @@
 @{
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_shopLayout.cshtml";
-    trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+    db_CanonStoreEntities ctx = new db_CanonStoreEntities();
 }
 <style>
     .com_btn {
@@ -30,12 +30,9 @@
     }
 </style>
 <!-- shop section -->
-<section class="shop_section layout_padding" style=" margin-bottom: 50px;">
+<section class="shop_section layout_padding">
     <div class="container">
         <div class="heading_container heading_center">
-            <h2>
-                Camera
-            </h2>
             <div>
                 <div>
                     @using (Html.BeginForm("Products", "Shop", FormMethod.Get))
@@ -112,8 +109,8 @@
                 </div>
             }
         </div>
-        <div>
-            <section class="panel">
+        <div class="container">
+            <section class="shop_section layout_padding">
                 <div class="panel-body">
                     <div class="pull-right">
                         <br />

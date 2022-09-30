@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
-    trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+    db_CanonStoreEntities ctx = new db_CanonStoreEntities();
 }
 
 <div class="main">
@@ -55,7 +55,7 @@
 
                 <div class="row">
                     @{
-                        Customer customer = ctx.Customers.Where(c => c.id == (int)Model.Id_Customer).FirstOrDefault();
+                        Customer customer = ctx.Customers.Where(c => c.Id == (int)Model.Id_Customer).FirstOrDefault();
                     }
                     @Html.Label("Customer", new { @class = "form_label" })
                     <br>

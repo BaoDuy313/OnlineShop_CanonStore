@@ -13,6 +13,7 @@ namespace CanonStore.Models
     using System.Collections.Generic;
     using System.ComponentModel;
 
+
     public partial class Bill
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,6 +21,7 @@ namespace CanonStore.Models
         {
             this.Bill_details = new HashSet<Bill_details>();
         }
+
         [DisplayName("Id")]
         public string IdBill { get; set; }
         [DisplayName("Date Created")]
@@ -27,7 +29,7 @@ namespace CanonStore.Models
         [DisplayName("Customer")]
         public int IdCustomer { get; set; }
         [DisplayName("Emloyee")]
-        public int IdEmloyee { get; set; }
+        public int IdEmployee { get; set; }
         [DisplayName("Total")]
         public Nullable<double> Total { get; set; }
         [DisplayName("Status")]
@@ -35,11 +37,11 @@ namespace CanonStore.Models
         [DisplayName("Discount")]
         public string Discount_code { get; set; }
 
-        public virtual Bill_Status Bill_Status { get; set; }
-        public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill_details> Bill_details { get; set; }
+        public virtual Bill_Status Bill_Status { get; set; }
+        public virtual Customer Customer { get; set; }
         public virtual Discount Discount { get; set; }
-        public virtual Emloyee Emloyee { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

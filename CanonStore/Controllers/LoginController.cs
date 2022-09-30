@@ -20,19 +20,19 @@ namespace CanonStore.Controllers
         {
             try
             {
-                using (trangbaoduy2_OnlineCanonStoreEntities db = new trangbaoduy2_OnlineCanonStoreEntities())
+                using (db_CanonStoreEntities db = new db_CanonStoreEntities())
                 {
                     Password EncryptData = new Password();
 
                     emloyeeCheck.Password = EncryptData.Encode(emloyeeCheck.Password);
-                    var obj = db.Emloyees.Where(a => a.UserName == emloyeeCheck.UserName && a.Password == emloyeeCheck.Password).FirstOrDefault();
+                    var obj = db.Employees.Where(a => a.UserName == emloyeeCheck.UserName && a.Password == emloyeeCheck.Password).FirstOrDefault();
 
                     if (obj != null)
                     {
-                        Session["EmloyeeId"] = obj.Id.ToString();
-                        Session["EmloyeeUserName"] = obj.UserName.ToString();
-                        Session["EmloyeeName"] = obj.Name.ToString();
-                        //ViewBag.EmloyeeName = (Emloyees.Name)HttpContext.Session["EmloyeeId"];
+                        Session["EmployeeId"] = obj.Id.ToString();
+                        Session["EmployeeUserName"] = obj.UserName.ToString();
+                        Session["EmployeeName"] = obj.Name.ToString();
+                        //ViewBag.EmloyeeName = (Emloyees.Name)HttpContext.Session["EmployeeId"];
                         //ViewBag.EmloyeeName = HttpContext.Session.SessionID;
 
                         return RedirectToAction("Index","Products");

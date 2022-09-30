@@ -1,15 +1,14 @@
-﻿@model CanonStore.Models.Emloyee
+﻿@model CanonStore.Models.Customer
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
-
 <div class="main">
-        <h2>Add Emloyee</h2>
+    <h2>Add Customer</h2>
     <div class="form_content">
         <div class="form_product">
 
-            @using (Html.BeginForm("Create", "Emloyee", FormMethod.Post))
+            @using (Html.BeginForm("Create", "Customer", FormMethod.Post))
             {
                 <div class="row">
 
@@ -72,16 +71,16 @@
                     @Html.ValidationMessageFor(m => m.Address)
                     <br>
                 </div>
-                <!--<div class="row">
-            @Html.LabelFor(m => m.ImageUpload, new { @class = "form_label" })
+                @*<div class="row">
+                @Html.LabelFor(m => m.ImageUpload, new { @class = "form_label" })
+                <br><br>
+                @Html.TextBoxFor(m=>m.ImageUpload,new { type="file" })
+            <input type="file" name="ImageUpload" id="ImageUpload" />
             <br><br>
-            @Html.TextBoxFor(m=>m.ImageUpload,new { type="file" })-->
-                @*<input type="file" name="ImageUpload" id="ImageUpload" />*@
-                <!--<br><br>
-        </div>-->
+            </div>*@
 
                 <div class="btn_row">
-                    <input type="submit" value="Add Emloyee" class="btn_addproduct">
+                    <input type="submit" value="Add Customer" class="btn_addproduct">
                 </div>
             }
 

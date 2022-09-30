@@ -7,7 +7,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
-    trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+    db_CanonStoreEntities ctx = new db_CanonStoreEntities();
 
 }
 
@@ -79,7 +79,7 @@
                     <td><img src="~/Content/images/@item.Image" alt="Alternate Text" style="width:120px; height:100px" /></td>
                     <td>$ @item.Price.Value.ToString("#,##0.##")</td>
                     @{
-                        Product_Type product_Type = ctx.Product_Type.Where(a => a.IdType == item.Type).FirstOrDefault();
+                        Product_Types product_Type = ctx.Product_Types.Where(a => a.IdType == item.Type).FirstOrDefault();
                         ViewBag.proT = product_Type;
                         Accessory accessory = ctx.Accessories.Where(s => s.Id_Acc == item.Acc_Id).FirstOrDefault();
                         //ViewBag.proA = accessory;

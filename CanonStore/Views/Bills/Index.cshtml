@@ -3,7 +3,7 @@
 @{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
     ViewBag.Title = "Index";
-    trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+    db_CanonStoreEntities ctx = new db_CanonStoreEntities();
 
 
 }
@@ -20,7 +20,8 @@
                     @Html.RadioButton("searchBy", "Year")<text> Year </text>
                 </div>
                 <div style="font-size:20px; margin:20px;">
-                    @Html.TextBox("date", "", new { @class = "input", type = "date", min = "2021-01-01", max = DateTime.Now.Date.ToString("yyyy-MM-dd"), value = DateTime.Now.Date, style = "font-size:20px;" })<input type="submit" style="font-size:20px;" />
+                    @Html.TextBox("date", "", new { @class = "input", type = "date", min = "2021-01-01", max = DateTime.Now.Date.ToString("yyyy-MM-dd"), value = DateTime.Now.Date, style = "font-size:20px;" })
+                    <input type="submit" value="Search" style="font-size:20px;" />
                 </div>
 
             }
@@ -73,7 +74,7 @@
                     <td>@item.Date_Created.ToString("dd/MM/yyyy")</td>
                     @{
 
-                        Customer customer = ctx.Customers.Where(c => c.id == item.IdCustomer).FirstOrDefault();
+                        Customer customer = ctx.Customers.Where(c => c.Id == item.IdCustomer).FirstOrDefault();
                         ViewBag.cus = customer;
                         List<Bill_details> bill_Details = ctx.Bill_details.Where(c => c.IdBill == item.IdBill).ToList();
 

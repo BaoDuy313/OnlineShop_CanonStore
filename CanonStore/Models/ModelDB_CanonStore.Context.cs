@@ -15,10 +15,10 @@ namespace CanonStore.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class trangbaoduy2_OnlineCanonStoreEntities : DbContext
+    public partial class db_CanonStoreEntities : DbContext
     {
-        public trangbaoduy2_OnlineCanonStoreEntities()
-            : base("name=trangbaoduy2_OnlineCanonStoreEntities")
+        public db_CanonStoreEntities()
+            : base("name=db_CanonStoreEntities")
         {
         }
     
@@ -28,15 +28,15 @@ namespace CanonStore.Models
         }
     
         public virtual DbSet<Accessory> Accessories { get; set; }
-        public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Bill_details> Bill_details { get; set; }
         public virtual DbSet<Bill_Status> Bill_Status { get; set; }
+        public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Discount> Discounts { get; set; }
-        public virtual DbSet<Emloyee> Emloyees { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Product_Types> Product_Types { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Product_Type> Product_Type { get; set; }
     
         public virtual ObjectResult<proc_AVG_star_product_Result> proc_AVG_star_product(Nullable<int> id)
         {

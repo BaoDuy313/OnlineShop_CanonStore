@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/AdminLayout.cshtml";
     ViewBag.Title = "Edit";
 
-    trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+    db_CanonStoreEntities ctx = new db_CanonStoreEntities();
 
 }
 
@@ -29,8 +29,8 @@
                     <br><br>
                 </div>
                 <div class="row">
-                    <label for="Type_Product" class="form_label">Emloyee:</label><br>
-                    @Html.DropDownListFor(m => m.IdEmloyee,
+                    <label for="Type_Product" class="form_label">Employee:</label><br>
+                    @Html.DropDownListFor(m => m.IdEmployee,
                         new SelectList(ViewBag.emloyees, "Id", "Name"),
                         new { @class = "form-control", @readonly = "readonly" })<br><br>
                 </div>

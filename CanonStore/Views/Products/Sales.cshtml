@@ -5,7 +5,7 @@
 @{
     ViewBag.Title = "Sales";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
-    trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+    db_CanonStoreEntities ctx = new db_CanonStoreEntities();
     Product product = new Product();
 
 }
@@ -58,7 +58,7 @@
                     <td>@product.Brand</td>
                     <td>$ @product.Price.Value.ToString("#,##0.##")</td>
                     @{
-                        Product_Type product_Type = ctx.Product_Type.Where(a => a.IdType == product.Type).FirstOrDefault();
+                        Product_Types product_Type = ctx.Product_Types.Where(a => a.IdType == product.Type).FirstOrDefault();
                         ViewBag.proT = product_Type;
                         //Accessory accessory = ctx.Accessories.Where(s => s.Id_Acc == item.Acc_Id).FirstOrDefault();
                         //ViewBag.proA = accessory;

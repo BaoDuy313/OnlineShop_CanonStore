@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "AboutCustomer";
     Layout = "~/Views/Shared/_shopLayout.cshtml";
-    trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+    db_CanonStoreEntities ctx = new db_CanonStoreEntities();
 }
 
 <style>
@@ -192,7 +192,7 @@
                                     <br />
                                     <h6 class="f-w-600">@Model.Name</h6><br />
 
-                                    <a href="~/Shop/CustomerEdit/@Model.id" style="color:white; ">
+                                    <a href="~/Shop/CustomerEdit/@Model.Id" style="color:white; ">
                                         Edit
                                     </a>
                                     <br />

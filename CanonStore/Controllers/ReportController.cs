@@ -15,7 +15,7 @@ namespace CanonStore.Controllers
 {
     public class ReportController : Controller
     {
-        trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+        db_CanonStoreEntities ctx = new db_CanonStoreEntities();
         // GET: Report
         public ActionResult Index()
         {

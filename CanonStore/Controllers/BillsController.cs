@@ -15,11 +15,11 @@ namespace CanonStore.Controllers
 {
     public class BillsController : Controller
     {
-        trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+        db_CanonStoreEntities ctx = new db_CanonStoreEntities();
         // GET: Bills
         public ActionResult Index()
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -38,7 +38,7 @@ namespace CanonStore.Controllers
         [HttpPost]
         public ActionResult Index(string date, string searchBy)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -159,7 +159,7 @@ namespace CanonStore.Controllers
         }
         public ActionResult Create()
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 return View();
 
@@ -168,7 +168,7 @@ namespace CanonStore.Controllers
         }
         public ActionResult Detail(string id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -178,11 +178,11 @@ namespace CanonStore.Controllers
 
                     ViewBag.bill_Details = bill_Details;
 
-                    Customer customer = ctx.Customers.Where(c => c.id == bill.IdCustomer).SingleOrDefault();
+                    Customer customer = ctx.Customers.Where(c => c.Id == bill.IdCustomer).SingleOrDefault();
                     ViewBag.customer = customer;
 
 
-                    Emloyee emloyee = ctx.Emloyees.Where(c => c.Id == bill.IdEmloyee).SingleOrDefault();
+                    Employee emloyee = ctx.Employees.Where(c => c.Id == bill.IdEmployee).SingleOrDefault();
                     ViewBag.emloyee = emloyee;
 
                     return View(bill);
@@ -197,14 +197,14 @@ namespace CanonStore.Controllers
         }
         public ActionResult Edit(String id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
                     List<Customer> customers = ctx.Customers.ToList();
                     ViewBag.customers = customers;
 
-                    List<Emloyee> emloyees = ctx.Emloyees.ToList();
+                    List<Employee> emloyees = ctx.Employees.ToList();
                     ViewBag.emloyees = emloyees;
 
                     List<Bill_Status> bill_Statuses = ctx.Bill_Status.ToList();
@@ -224,7 +224,7 @@ namespace CanonStore.Controllers
         [HttpPost]
         public ActionResult Edit(Bill bill)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -233,7 +233,7 @@ namespace CanonStore.Controllers
 
                     //oldBill.IdCustomer = bill.IdCustomer;
 
-                    oldBill.IdEmloyee = bill.IdEmloyee;
+                    oldBill.IdEmployee = bill.IdEmployee;
                     oldBill.Status = bill.Status;
                     //oldBill.Total = bill.Total;
                     //oldBill.Date_Created = bill.Date_Created;
@@ -251,7 +251,7 @@ namespace CanonStore.Controllers
         }
         public ActionResult Delete(string id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -261,11 +261,11 @@ namespace CanonStore.Controllers
 
                     ViewBag.bill_Details = bill_Details;
 
-                    Customer customer = ctx.Customers.Where(c => c.id == bill.IdCustomer).SingleOrDefault();
+                    Customer customer = ctx.Customers.Where(c => c.Id == bill.IdCustomer).SingleOrDefault();
                     ViewBag.customer = customer;
 
 
-                    Emloyee emloyee = ctx.Emloyees.Where(c => c.Id == bill.IdEmloyee).SingleOrDefault();
+                    Employee emloyee = ctx.Employees.Where(c => c.Id == bill.IdEmployee).SingleOrDefault();
                     ViewBag.emloyee = emloyee;
 
                     return View(bill);
@@ -281,7 +281,7 @@ namespace CanonStore.Controllers
 
         public ActionResult DeleteConfirm(string id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -308,7 +308,7 @@ namespace CanonStore.Controllers
 
         public ActionResult ExportExcel(string time)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 if (time != null)
                 {
@@ -334,7 +334,7 @@ namespace CanonStore.Controllers
                                             new DataColumn("Date Created")  });
                         foreach (var bill in bills)
                         {
-                            Customer customer = ctx.Customers.Where(c => c.id == bill.IdCustomer).FirstOrDefault();
+                            Customer customer = ctx.Customers.Where(c => c.Id == bill.IdCustomer).FirstOrDefault();
                             Discount discount = ctx.Discounts.Where(d => d.Dis_Code == bill.Discount_code).FirstOrDefault();
                             Bill_Status bill_Status = ctx.Bill_Status.Where(bs => bs.IdStatus == bill.Status).FirstOrDefault();
 
@@ -365,7 +365,7 @@ namespace CanonStore.Controllers
         [HttpPost]
         public ActionResult ExportPDF()
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 List<Bill> bills = (List<Bill>)Session["Bill"];
                 List<Sumby> sumbies = (List<Sumby>)Session["BillSumby"];
@@ -393,11 +393,11 @@ namespace CanonStore.Controllers
 
             ViewBag.bill_Details = bill_Details;
 
-            Customer customer = ctx.Customers.Where(c => c.id == bill.IdCustomer).SingleOrDefault();
+            Customer customer = ctx.Customers.Where(c => c.Id == bill.IdCustomer).SingleOrDefault();
             ViewBag.customer = customer;
 
 
-            Emloyee emloyee = ctx.Emloyees.Where(c => c.Id == bill.IdEmloyee).SingleOrDefault();
+            Employee emloyee = ctx.Employees.Where(c => c.Id == bill.IdEmployee).SingleOrDefault();
             ViewBag.emloyee = emloyee;
             try
             {

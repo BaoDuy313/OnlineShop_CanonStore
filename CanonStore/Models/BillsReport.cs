@@ -11,7 +11,7 @@ namespace CanonStore.Models
 {
     public class BillsReport
     {
-        trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+        db_CanonStoreEntities ctx = new db_CanonStoreEntities();
         #region Declaration
         int _totalColumn = 6;
         Document _document;
@@ -147,7 +147,7 @@ namespace CanonStore.Models
             _fontStyle = FontFactory.GetFont("Tahoma", 10f, 0);
             foreach (Bill bill in _bills)
             {
-                Customer customer = ctx.Customers.Where(c => c.id == bill.IdCustomer).FirstOrDefault();
+                Customer customer = ctx.Customers.Where(c => c.Id == bill.IdCustomer).FirstOrDefault();
                 Discount discount = ctx.Discounts.Where(d => d.Dis_Code == bill.Discount_code).FirstOrDefault();
                 Bill_Status bill_Status = ctx.Bill_Status.Where(bs => bs.IdStatus == bill.Status).FirstOrDefault();
 

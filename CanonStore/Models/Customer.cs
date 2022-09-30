@@ -15,6 +15,7 @@ namespace CanonStore.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Web;
+
     public partial class Customer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,8 +23,8 @@ namespace CanonStore.Models
         {
             this.Bills = new HashSet<Bill>();
         }
-
-        public int id { get; set; }
+    
+        public int Id { get; set; }
         [Required]
         [RegularExpression("[a-zA-Z ]*$", ErrorMessage = "Only letters")]
         [DisplayName("Name")]
@@ -57,6 +58,7 @@ namespace CanonStore.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
+
         [NotMapped]
         [DisplayName("ImageUpload")]
         public HttpPostedFileBase ImageUpload { get; set; }

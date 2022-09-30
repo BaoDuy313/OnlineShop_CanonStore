@@ -14,6 +14,7 @@ namespace CanonStore.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
+
     public partial class Discount
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,6 +22,7 @@ namespace CanonStore.Models
         {
             this.Bills = new HashSet<Bill>();
         }
+
         [Required]
         [DisplayName("Code")]
         public string Dis_Code { get; set; }

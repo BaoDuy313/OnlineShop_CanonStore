@@ -1,4 +1,4 @@
-﻿@model CanonStore.Models.Emloyee
+﻿@model CanonStore.Models.Employee
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
@@ -70,7 +70,7 @@
 
     <div>
         <h3 style="color:red;">Do you want to delete</h3>
-        <a href="~/Emloyee/DeleteConfirm/@Model.Id" class="btn_Delete">
+        <a href="~/Employees/DeleteConfirm/@Model.Id" class="btn_Delete">
             <i class="fa fa-trash" aria-hidden="true"></i>
         </a>
     </div>

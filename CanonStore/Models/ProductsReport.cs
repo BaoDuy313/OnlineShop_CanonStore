@@ -11,7 +11,7 @@ namespace CanonStore.Models
 {
     public class ProductsReport
     {
-        trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+        db_CanonStoreEntities ctx = new db_CanonStoreEntities();
         #region Declaration
         int _totalColumn = 9;
         Document _document;
@@ -160,7 +160,7 @@ namespace CanonStore.Models
                 _pdfPCell.BackgroundColor = BaseColor.WHITE;
                 _pdfTable.AddCell(_pdfPCell);
 
-                Product_Type product_Type = ctx.Product_Type.Where(a => a.IdType == product.Type).FirstOrDefault();
+                Product_Types product_Type = ctx.Product_Types.Where(a => a.IdType == product.Type).FirstOrDefault();
                 Accessory accessory = ctx.Accessories.Where(s => s.Id_Acc == product.Acc_Id).FirstOrDefault();
 
                 _pdfPCell = new PdfPCell(new Phrase(product_Type.Name, _fontStyle));

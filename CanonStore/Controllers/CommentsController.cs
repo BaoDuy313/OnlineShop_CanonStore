@@ -15,11 +15,11 @@ namespace CanonStore.Controllers
 {
     public class CommentsController : Controller
     {
-        trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+        db_CanonStoreEntities ctx = new db_CanonStoreEntities();
         // GET: Comments
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -78,7 +78,7 @@ namespace CanonStore.Controllers
         }
         public ActionResult Edit(int id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -99,7 +99,7 @@ namespace CanonStore.Controllers
         [HttpPost]
         public ActionResult Edit(Comment comment)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {

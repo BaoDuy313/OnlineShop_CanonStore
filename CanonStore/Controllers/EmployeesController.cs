@@ -9,18 +9,18 @@ using CanonStore.Models;
 
 namespace CanonStore.Controllers
 {
-    public class EmloyeeController : Controller
+    public class EmployeesController : Controller
     {
-        trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
-        // GET: Emloyee
+        db_CanonStoreEntities ctx = new db_CanonStoreEntities();
+        // GET: Employee
         public ActionResult Index()
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
-                    List<Emloyee> emloyees = ctx.Emloyees.ToList();
-                    return View(emloyees);
+                    List<Employee> employees = ctx.Employees.ToList();
+                    return View(employees);
                 }
                 catch
                 {
@@ -32,13 +32,13 @@ namespace CanonStore.Controllers
         
         public ActionResult Create()
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
-                    Emloyee emloyee = new Emloyee();
+                    Employee employee = new Employee();
 
-                    return View(emloyee);
+                    return View(employee);
                 }
                 catch
                 {
@@ -48,32 +48,32 @@ namespace CanonStore.Controllers
             return RedirectToAction("Index", "Login");
         }
         [HttpPost]
-        public ActionResult Create(Emloyee emloyee)
+        public ActionResult Create(Employee employee)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
                     if (ModelState.IsValid)
                     {
 
-                        if (emloyee.ImageUpload != null)
+                        if (employee.ImageUpload != null)
                         {
-                            string fileName = Path.GetFileNameWithoutExtension(emloyee.ImageUpload.FileName);
-                            string extension = Path.GetExtension(emloyee.ImageUpload.FileName);
-                            emloyee.DateCreated = DateTime.Now.Date;
-                            emloyee.Image = "" + emloyee.Name + extension;
-                            emloyee.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/"), emloyee.Name + extension));
+                            string fileName = Path.GetFileNameWithoutExtension(employee.ImageUpload.FileName);
+                            string extension = Path.GetExtension(employee.ImageUpload.FileName);
+                            employee.DateCreated = DateTime.Now.Date;
+                            employee.Image = "" + employee.Name + extension;
+                            employee.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/"), employee.Name + extension));
                         }
                         else
                         {
-                            emloyee.Image = "Avatar.png";
+                            employee.Image = "Avatar.png";
                         }
                         Password EncryptData = new Password();
 
-                        emloyee.Password = EncryptData.Encode(emloyee.Password);
+                        employee.Password = EncryptData.Encode(employee.Password);
 
-                        ctx.Emloyees.Add(emloyee);
+                        ctx.Employees.Add(employee);
                         ctx.SaveChanges();
                         return RedirectToAction("Index");
                     }
@@ -91,12 +91,12 @@ namespace CanonStore.Controllers
         }
         public ActionResult Detail(int id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
-                    Emloyee emloyee = ctx.Emloyees.Where(c => c.Id == id).SingleOrDefault();
-                    return View(emloyee);
+                    Employee employee = ctx.Employees.Where(c => c.Id == id).SingleOrDefault();
+                    return View(employee);
                 }
                 catch
                 {
@@ -107,14 +107,14 @@ namespace CanonStore.Controllers
         }
         public ActionResult Edit(int id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
-                    Emloyee emloyee = ctx.Emloyees.Where(c => c.Id == id).SingleOrDefault();
+                    Employee employee = ctx.Employees.Where(c => c.Id == id).SingleOrDefault();
 
 
-                    return View(emloyee);
+                    return View(employee);
                 }
                 catch
                 {
@@ -125,26 +125,26 @@ namespace CanonStore.Controllers
 
         }
         [HttpPost]
-        public ActionResult Edit(Emloyee emloyee)
+        public ActionResult Edit(Employee employee)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
-                    Emloyee oldEmloyee = ctx.Emloyees.Where(c => c.Id == emloyee.Id).SingleOrDefault();
+                    Employee oldEmployee = ctx.Employees.Where(c => c.Id == employee.Id).SingleOrDefault();
 
-                    oldEmloyee.Name = emloyee.Name;
-                    oldEmloyee.Phone = emloyee.Phone;
+                    oldEmployee.Name = employee.Name;
+                    oldEmployee.Phone = employee.Phone;
                     //oldCustomer.DayOfBirth = customer.DayOfBirth;
 
-                    if (emloyee.ImageUpload != null)
+                    if (employee.ImageUpload != null)
                     {
-                        string fileName = Path.GetFileNameWithoutExtension(emloyee.ImageUpload.FileName);
-                        string extension = Path.GetExtension(emloyee.ImageUpload.FileName);
+                        string fileName = Path.GetFileNameWithoutExtension(employee.ImageUpload.FileName);
+                        string extension = Path.GetExtension(employee.ImageUpload.FileName);
                         fileName += extension;
-                        emloyee.Image = "" + oldEmloyee.Name + extension;
-                        emloyee.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/"), oldEmloyee.Name + extension));
-                        oldEmloyee.Image = emloyee.Image;
+                        employee.Image = "" + oldEmployee.Name + extension;
+                        employee.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/"), oldEmployee.Name + extension));
+                        oldEmployee.Image = employee.Image;
                     }
 
 
@@ -161,13 +161,13 @@ namespace CanonStore.Controllers
         }
         public ActionResult Delete(int id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
-                    Emloyee emloyee = ctx.Emloyees.Where(c => c.Id == id).SingleOrDefault();
+                    Employee employee = ctx.Employees.Where(c => c.Id == id).SingleOrDefault();
 
-                    return View(emloyee);
+                    return View(employee);
                 }
                 catch
                 {
@@ -179,13 +179,13 @@ namespace CanonStore.Controllers
 
         public ActionResult DeleteConfirm(int id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
-                    Emloyee emloyee1 = ctx.Emloyees.Where(c => c.Id == id).SingleOrDefault();
+                    Employee employee1 = ctx.Employees.Where(c => c.Id == id).SingleOrDefault();
 
-                    ctx.Emloyees.Remove(emloyee1);
+                    ctx.Employees.Remove(employee1);
                     ctx.SaveChanges();
                     //redirect view
                     return RedirectToAction("Index");

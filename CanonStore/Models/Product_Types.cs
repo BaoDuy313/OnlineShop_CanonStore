@@ -12,10 +12,10 @@ namespace CanonStore.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Product_Type
+    public partial class Product_Types
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Product_Type()
+        public Product_Types()
         {
             this.Products = new HashSet<Product>();
         }

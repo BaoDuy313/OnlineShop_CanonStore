@@ -4,25 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="trangbaoduy2_OnlineCanonStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Accessory">
+      <Schema Namespace="db_CanonStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accessories">
           <Key>
             <PropertyRef Name="Id_Acc" />
           </Key>
           <Property Name="Id_Acc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name_Acc" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="Bill">
-          <Key>
-            <PropertyRef Name="IdBill" />
-          </Key>
-          <Property Name="IdBill" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Date_Created" Type="date" Nullable="false" />
-          <Property Name="IdCustomer" Type="int" Nullable="false" />
-          <Property Name="IdEmloyee" Type="int" Nullable="false" />
-          <Property Name="Total" Type="float" />
-          <Property Name="Status" Type="int" />
-          <Property Name="Discount_code" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Bill_details">
           <Key>
@@ -42,6 +30,18 @@
           <Property Name="IdStatus" Type="int" Nullable="false" />
           <Property Name="NameStatus" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Bills">
+          <Key>
+            <PropertyRef Name="IdBill" />
+          </Key>
+          <Property Name="IdBill" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date_Created" Type="date" Nullable="false" />
+          <Property Name="IdCustomer" Type="int" Nullable="false" />
+          <Property Name="IdEmployee" Type="int" Nullable="false" />
+          <Property Name="Total" Type="float" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Discount_code" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Comments">
           <Key>
             <PropertyRef Name="Id" />
@@ -54,11 +54,11 @@
           <Property Name="Com_txt" Type="varchar" MaxLength="1000" />
           <Property Name="Id_Bill" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="Customer">
+        <EntityType Name="Customers">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Address" Type="varchar" MaxLength="50" />
           <Property Name="Phone" Type="varchar" MaxLength="50" />
@@ -79,7 +79,7 @@
           <Property Name="Date_End" Type="date" />
           <Property Name="Discount_Value" Type="int" />
         </EntityType>
-        <EntityType Name="Emloyee">
+        <EntityType Name="Employees">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -94,7 +94,14 @@
           <Property Name="DayOfBirth" Type="date" />
           <Property Name="DateCreated" Type="date" />
         </EntityType>
-        <EntityType Name="Product">
+        <EntityType Name="Product_Types">
+          <Key>
+            <PropertyRef Name="IdType" />
+          </Key>
+          <Property Name="IdType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Products">
           <Key>
             <PropertyRef Name="Id_product" />
           </Key>
@@ -114,42 +121,35 @@
           <Property Name="Shutter_Speed" Type="varchar" MaxLength="50" />
           <Property Name="Is_Available" Type="bit" />
         </EntityType>
-        <EntityType Name="Product_Type">
-          <Key>
-            <PropertyRef Name="IdType" />
-          </Key>
-          <Property Name="IdType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-        </EntityType>
         <Association Name="FK_Bill_Bill_Status">
           <End Role="Bill_Status" Type="Self.Bill_Status" Multiplicity="0..1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <End Role="Bills" Type="Self.Bills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Bill_Status">
               <PropertyRef Name="IdStatus" />
             </Principal>
-            <Dependent Role="Bill">
+            <Dependent Role="Bills">
               <PropertyRef Name="Status" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bill_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Bills" Type="Self.Bills" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="id" />
+            <Principal Role="Customers">
+              <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Bill">
+            <Dependent Role="Bills">
               <PropertyRef Name="IdCustomer" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bill_details_Bill">
-          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
+          <End Role="Bills" Type="Self.Bills" Multiplicity="1" />
           <End Role="Bill_details" Type="Self.Bill_details" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Bill">
+            <Principal Role="Bills">
               <PropertyRef Name="IdBill" />
             </Principal>
             <Dependent Role="Bill_details">
@@ -158,10 +158,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bill_details_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="Bill_details" Type="Self.Bill_details" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Product">
+            <Principal Role="Products">
               <PropertyRef Name="Id_product" />
             </Principal>
             <Dependent Role="Bill_details">
@@ -171,48 +171,48 @@
         </Association>
         <Association Name="FK_Bill_Discounts">
           <End Role="Discounts" Type="Self.Discounts" Multiplicity="0..1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <End Role="Bills" Type="Self.Bills" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Discounts">
               <PropertyRef Name="Dis_Code" />
             </Principal>
-            <Dependent Role="Bill">
+            <Dependent Role="Bills">
               <PropertyRef Name="Discount_code" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bill_Emloyee">
-          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Bills" Type="Self.Bills" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Emloyee">
+            <Principal Role="Employees">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Bill">
-              <PropertyRef Name="IdEmloyee" />
+            <Dependent Role="Bills">
+              <PropertyRef Name="IdEmployee" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_Accessory">
-          <End Role="Accessory" Type="Self.Accessory" Multiplicity="0..1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <End Role="Accessories" Type="Self.Accessories" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Accessory">
+            <Principal Role="Accessories">
               <PropertyRef Name="Id_Acc" />
             </Principal>
-            <Dependent Role="Product">
+            <Dependent Role="Products">
               <PropertyRef Name="Acc_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_Product_Type">
-          <End Role="Product_Type" Type="Self.Product_Type" Multiplicity="1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <End Role="Product_Types" Type="Self.Product_Types" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Product_Type">
+            <Principal Role="Product_Types">
               <PropertyRef Name="IdType" />
             </Principal>
-            <Dependent Role="Product">
+            <Dependent Role="Products">
               <PropertyRef Name="Type" />
             </Dependent>
           </ReferentialConstraint>
@@ -233,79 +233,62 @@
           <Parameter Name="datetmp" Type="date" Mode="In" />
         </Function>
         <Function Name="proc_Top5bestsellingproduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="trangbaoduy2_OnlineCanonStoreModelStoreContainer">
-          <EntitySet Name="Accessory" EntityType="Self.Accessory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="db_CanonStoreModelStoreContainer">
+          <EntitySet Name="Accessories" EntityType="Self.Accessories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bill_details" EntityType="Self.Bill_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bill_Status" EntityType="Self.Bill_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bills" EntityType="Self.Bills" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Discounts" EntityType="Self.Discounts" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Emloyee" EntityType="Self.Emloyee" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Product_Type" EntityType="Self.Product_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Types" EntityType="Self.Product_Types" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Bill_Bill_Status" Association="Self.FK_Bill_Bill_Status">
             <End Role="Bill_Status" EntitySet="Bill_Status" />
-            <End Role="Bill" EntitySet="Bill" />
+            <End Role="Bills" EntitySet="Bills" />
           </AssociationSet>
           <AssociationSet Name="FK_Bill_Customer" Association="Self.FK_Bill_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Bill" EntitySet="Bill" />
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Bills" EntitySet="Bills" />
           </AssociationSet>
           <AssociationSet Name="FK_Bill_details_Bill" Association="Self.FK_Bill_details_Bill">
-            <End Role="Bill" EntitySet="Bill" />
+            <End Role="Bills" EntitySet="Bills" />
             <End Role="Bill_details" EntitySet="Bill_details" />
           </AssociationSet>
           <AssociationSet Name="FK_Bill_details_Product" Association="Self.FK_Bill_details_Product">
-            <End Role="Product" EntitySet="Product" />
+            <End Role="Products" EntitySet="Products" />
             <End Role="Bill_details" EntitySet="Bill_details" />
           </AssociationSet>
           <AssociationSet Name="FK_Bill_Discounts" Association="Self.FK_Bill_Discounts">
             <End Role="Discounts" EntitySet="Discounts" />
-            <End Role="Bill" EntitySet="Bill" />
+            <End Role="Bills" EntitySet="Bills" />
           </AssociationSet>
           <AssociationSet Name="FK_Bill_Emloyee" Association="Self.FK_Bill_Emloyee">
-            <End Role="Emloyee" EntitySet="Emloyee" />
-            <End Role="Bill" EntitySet="Bill" />
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Bills" EntitySet="Bills" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Accessory" Association="Self.FK_Product_Accessory">
-            <End Role="Accessory" EntitySet="Accessory" />
-            <End Role="Product" EntitySet="Product" />
+            <End Role="Accessories" EntitySet="Accessories" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Product_Type" Association="Self.FK_Product_Product_Type">
-            <End Role="Product_Type" EntitySet="Product_Type" />
-            <End Role="Product" EntitySet="Product" />
+            <End Role="Product_Types" EntitySet="Product_Types" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="trangbaoduy2_OnlineCanonStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="db_CanonStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Accessory">
           <Key>
             <PropertyRef Name="Id_Acc" />
           </Key>
           <Property Name="Id_Acc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name_Acc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Accessory" FromRole="Accessory" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="Bill">
-          <Key>
-            <PropertyRef Name="IdBill" />
-          </Key>
-          <Property Name="IdBill" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Date_Created" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="IdCustomer" Type="Int32" Nullable="false" />
-          <Property Name="IdEmloyee" Type="Int32" Nullable="false" />
-          <Property Name="Total" Type="Double" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="Discount_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Bill_Status" Relationship="Self.FK_Bill_Bill_Status" FromRole="Bill" ToRole="Bill_Status" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Bill_Customer" FromRole="Bill" ToRole="Customer" />
-          <NavigationProperty Name="Bill_details" Relationship="Self.FK_Bill_details_Bill" FromRole="Bill" ToRole="Bill_details" />
-          <NavigationProperty Name="Discount" Relationship="Self.FK_Bill_Discounts" FromRole="Bill" ToRole="Discounts" />
-          <NavigationProperty Name="Emloyee" Relationship="Self.FK_Bill_Emloyee" FromRole="Bill" ToRole="Emloyee" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Accessory" FromRole="Accessories" ToRole="Products" />
         </EntityType>
         <EntityType Name="Bill_details">
           <Key>
@@ -317,8 +300,8 @@
           <Property Name="Price" Type="Double" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date_Created" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Bill" Relationship="Self.FK_Bill_details_Bill" FromRole="Bill_details" ToRole="Bill" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_Bill_details_Product" FromRole="Bill_details" ToRole="Product" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK_Bill_details_Bill" FromRole="Bill_details" ToRole="Bills" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Bill_details_Product" FromRole="Bill_details" ToRole="Products" />
         </EntityType>
         <EntityType Name="Bill_Status">
           <Key>
@@ -326,7 +309,24 @@
           </Key>
           <Property Name="IdStatus" Type="Int32" Nullable="false" />
           <Property Name="NameStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Bill_Status" FromRole="Bill_Status" ToRole="Bill" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Bill_Status" FromRole="Bill_Status" ToRole="Bills" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="IdBill" />
+          </Key>
+          <Property Name="IdBill" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date_Created" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdCustomer" Type="Int32" Nullable="false" />
+          <Property Name="IdEmployee" Type="Int32" Nullable="false" />
+          <Property Name="Total" Type="Double" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Discount_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Bill_details" Relationship="Self.FK_Bill_details_Bill" FromRole="Bills" ToRole="Bill_details" />
+          <NavigationProperty Name="Bill_Status" Relationship="Self.FK_Bill_Bill_Status" FromRole="Bills" ToRole="Bill_Status" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Bill_Customer" FromRole="Bills" ToRole="Customers" />
+          <NavigationProperty Name="Discount" Relationship="Self.FK_Bill_Discounts" FromRole="Bills" ToRole="Discounts" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Bill_Emloyee" FromRole="Bills" ToRole="Employees" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -342,9 +342,9 @@
         </EntityType>
         <EntityType Name="Customer">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -354,7 +354,7 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Precision="0" />
           <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Customer" FromRole="Customer" ToRole="Bill" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Customer" FromRole="Customers" ToRole="Bills" />
         </EntityType>
         <EntityType Name="Discount">
           <Key>
@@ -365,9 +365,9 @@
           <Property Name="Date_Start" Type="DateTime" Precision="0" />
           <Property Name="Date_End" Type="DateTime" Precision="0" />
           <Property Name="Discount_Value" Type="Int32" />
-          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Discounts" FromRole="Discounts" ToRole="Bill" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Discounts" FromRole="Discounts" ToRole="Bills" />
         </EntityType>
-        <EntityType Name="Emloyee">
+        <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -381,7 +381,15 @@
           <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DayOfBirth" Type="DateTime" Precision="0" />
           <Property Name="DateCreated" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Emloyee" FromRole="Emloyee" ToRole="Bill" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Emloyee" FromRole="Employees" ToRole="Bills" />
+        </EntityType>
+        <EntityType Name="Product_Types">
+          <Key>
+            <PropertyRef Name="IdType" />
+          </Key>
+          <Property Name="IdType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Product_Type" FromRole="Product_Types" ToRole="Products" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -402,59 +410,27 @@
           <Property Name="Focal_Distance" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Shutter_Speed" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Is_Available" Type="Boolean" />
-          <NavigationProperty Name="Accessory" Relationship="Self.FK_Product_Accessory" FromRole="Product" ToRole="Accessory" />
-          <NavigationProperty Name="Bill_details" Relationship="Self.FK_Bill_details_Product" FromRole="Product" ToRole="Bill_details" />
-          <NavigationProperty Name="Product_Type" Relationship="Self.FK_Product_Product_Type" FromRole="Product" ToRole="Product_Type" />
-        </EntityType>
-        <EntityType Name="Product_Type">
-          <Key>
-            <PropertyRef Name="IdType" />
-          </Key>
-          <Property Name="IdType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Product_Type" FromRole="Product_Type" ToRole="Product" />
+          <NavigationProperty Name="Accessory" Relationship="Self.FK_Product_Accessory" FromRole="Products" ToRole="Accessories" />
+          <NavigationProperty Name="Bill_details" Relationship="Self.FK_Bill_details_Product" FromRole="Products" ToRole="Bill_details" />
+          <NavigationProperty Name="Product_Types" Relationship="Self.FK_Product_Product_Type" FromRole="Products" ToRole="Product_Types" />
         </EntityType>
         <Association Name="FK_Product_Accessory">
-          <End Role="Accessory" Type="Self.Accessory" Multiplicity="0..1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <End Role="Accessories" Type="Self.Accessory" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Accessory">
+            <Principal Role="Accessories">
               <PropertyRef Name="Id_Acc" />
             </Principal>
-            <Dependent Role="Product">
+            <Dependent Role="Products">
               <PropertyRef Name="Acc_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Bill_Bill_Status">
-          <End Role="Bill_Status" Type="Self.Bill_Status" Multiplicity="0..1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Bill_Status">
-              <PropertyRef Name="IdStatus" />
-            </Principal>
-            <Dependent Role="Bill">
-              <PropertyRef Name="Status" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Bill_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Bill">
-              <PropertyRef Name="IdCustomer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Bill_details_Bill">
-          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
+          <End Role="Bills" Type="Self.Bill" Multiplicity="1" />
           <End Role="Bill_details" Type="Self.Bill_details" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Bill">
+            <Principal Role="Bills">
               <PropertyRef Name="IdBill" />
             </Principal>
             <Dependent Role="Bill_details">
@@ -462,35 +438,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Bill_Discounts">
-          <End Role="Discounts" Type="Self.Discount" Multiplicity="0..1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Discounts">
-              <PropertyRef Name="Dis_Code" />
-            </Principal>
-            <Dependent Role="Bill">
-              <PropertyRef Name="Discount_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Bill_Emloyee">
-          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Emloyee">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Bill">
-              <PropertyRef Name="IdEmloyee" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Bill_details_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
           <End Role="Bill_details" Type="Self.Bill_details" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Product">
+            <Principal Role="Products">
               <PropertyRef Name="Id_product" />
             </Principal>
             <Dependent Role="Bill_details">
@@ -498,77 +450,125 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Product_Product_Type">
-          <End Role="Product_Type" Type="Self.Product_Type" Multiplicity="1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+        <Association Name="FK_Bill_Bill_Status">
+          <End Role="Bill_Status" Type="Self.Bill_Status" Multiplicity="0..1" />
+          <End Role="Bills" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Product_Type">
+            <Principal Role="Bill_Status">
+              <PropertyRef Name="IdStatus" />
+            </Principal>
+            <Dependent Role="Bills">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Customer">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Bills" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bills">
+              <PropertyRef Name="IdCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Discounts">
+          <End Role="Discounts" Type="Self.Discount" Multiplicity="0..1" />
+          <End Role="Bills" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discounts">
+              <PropertyRef Name="Dis_Code" />
+            </Principal>
+            <Dependent Role="Bills">
+              <PropertyRef Name="Discount_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Emloyee">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Bills" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bills">
+              <PropertyRef Name="IdEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Product_Type">
+          <End Role="Product_Types" Type="Self.Product_Types" Multiplicity="1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Types">
               <PropertyRef Name="IdType" />
             </Principal>
-            <Dependent Role="Product">
+            <Dependent Role="Products">
               <PropertyRef Name="Type" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="trangbaoduy2_OnlineCanonStoreEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="db_CanonStoreEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accessories" EntityType="Self.Accessory" />
-          <EntitySet Name="Bills" EntityType="Self.Bill" />
           <EntitySet Name="Bill_details" EntityType="Self.Bill_details" />
           <EntitySet Name="Bill_Status" EntityType="Self.Bill_Status" />
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Discounts" EntityType="Self.Discount" />
-          <EntitySet Name="Emloyees" EntityType="Self.Emloyee" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Product_Types" EntityType="Self.Product_Types" />
           <EntitySet Name="Products" EntityType="Self.Product" />
-          <EntitySet Name="Product_Type" EntityType="Self.Product_Type" />
           <AssociationSet Name="FK_Product_Accessory" Association="Self.FK_Product_Accessory">
-            <End Role="Accessory" EntitySet="Accessories" />
-            <End Role="Product" EntitySet="Products" />
+            <End Role="Accessories" EntitySet="Accessories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_details_Bill" Association="Self.FK_Bill_details_Bill">
+            <End Role="Bills" EntitySet="Bills" />
+            <End Role="Bill_details" EntitySet="Bill_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_details_Product" Association="Self.FK_Bill_details_Product">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Bill_details" EntitySet="Bill_details" />
           </AssociationSet>
           <AssociationSet Name="FK_Bill_Bill_Status" Association="Self.FK_Bill_Bill_Status">
             <End Role="Bill_Status" EntitySet="Bill_Status" />
-            <End Role="Bill" EntitySet="Bills" />
+            <End Role="Bills" EntitySet="Bills" />
           </AssociationSet>
           <AssociationSet Name="FK_Bill_Customer" Association="Self.FK_Bill_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Bill" EntitySet="Bills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Bill_details_Bill" Association="Self.FK_Bill_details_Bill">
-            <End Role="Bill" EntitySet="Bills" />
-            <End Role="Bill_details" EntitySet="Bill_details" />
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Bills" EntitySet="Bills" />
           </AssociationSet>
           <AssociationSet Name="FK_Bill_Discounts" Association="Self.FK_Bill_Discounts">
             <End Role="Discounts" EntitySet="Discounts" />
-            <End Role="Bill" EntitySet="Bills" />
+            <End Role="Bills" EntitySet="Bills" />
           </AssociationSet>
           <AssociationSet Name="FK_Bill_Emloyee" Association="Self.FK_Bill_Emloyee">
-            <End Role="Emloyee" EntitySet="Emloyees" />
-            <End Role="Bill" EntitySet="Bills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Bill_details_Product" Association="Self.FK_Bill_details_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="Bill_details" EntitySet="Bill_details" />
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Bills" EntitySet="Bills" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Product_Type" Association="Self.FK_Product_Product_Type">
-            <End Role="Product_Type" EntitySet="Product_Type" />
-            <End Role="Product" EntitySet="Products" />
+            <End Role="Product_Types" EntitySet="Product_Types" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <FunctionImport Name="proc_AVG_star_product" ReturnType="Collection(trangbaoduy2_OnlineCanonStoreModel.proc_AVG_star_product_Result)">
+          <FunctionImport Name="proc_AVG_star_product" ReturnType="Collection(db_CanonStoreModel.proc_AVG_star_product_Result)">
             <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="proc_sumproductbymonth" ReturnType="Collection(trangbaoduy2_OnlineCanonStoreModel.proc_sumproductbymonth_Result)">
+          <FunctionImport Name="proc_sumproductbymonth" ReturnType="Collection(db_CanonStoreModel.proc_sumproductbymonth_Result)">
             <Parameter Name="datetmp" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="proc_sumsalesbydate" ReturnType="Collection(trangbaoduy2_OnlineCanonStoreModel.proc_sumsalesbydate_Result)">
+          <FunctionImport Name="proc_sumsalesbydate" ReturnType="Collection(db_CanonStoreModel.proc_sumsalesbydate_Result)">
             <Parameter Name="datetmp" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="proc_sumsalesbymonth" ReturnType="Collection(trangbaoduy2_OnlineCanonStoreModel.proc_sumsalesbymonth_Result)">
+          <FunctionImport Name="proc_sumsalesbymonth" ReturnType="Collection(db_CanonStoreModel.proc_sumsalesbymonth_Result)">
             <Parameter Name="datetmp" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="proc_sumsalesbyyear" ReturnType="Collection(trangbaoduy2_OnlineCanonStoreModel.proc_sumsalesbyyear_Result)">
+          <FunctionImport Name="proc_sumsalesbyyear" ReturnType="Collection(db_CanonStoreModel.proc_sumsalesbyyear_Result)">
             <Parameter Name="datetmp" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="proc_Top5bestsellingproduct" ReturnType="Collection(trangbaoduy2_OnlineCanonStoreModel.proc_Top5bestsellingproduct_Result)" />
+          <FunctionImport Name="proc_Top5bestsellingproduct" ReturnType="Collection(db_CanonStoreModel.proc_Top5bestsellingproduct_Result)" />
         </EntityContainer>
         <ComplexType Name="proc_AVG_star_product_Result">
           <Property Type="Int32" Name="Id_Product" Nullable="true" />
@@ -599,30 +599,17 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="trangbaoduy2_OnlineCanonStoreModelStoreContainer" CdmEntityContainer="trangbaoduy2_OnlineCanonStoreEntities">
+        <EntityContainerMapping StorageEntityContainer="db_CanonStoreModelStoreContainer" CdmEntityContainer="db_CanonStoreEntities">
           <EntitySetMapping Name="Accessories">
-            <EntityTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.Accessory">
-              <MappingFragment StoreEntitySet="Accessory">
+            <EntityTypeMapping TypeName="db_CanonStoreModel.Accessory">
+              <MappingFragment StoreEntitySet="Accessories">
                 <ScalarProperty Name="Id_Acc" ColumnName="Id_Acc" />
                 <ScalarProperty Name="Name_Acc" ColumnName="Name_Acc" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Bills">
-            <EntityTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.Bill">
-              <MappingFragment StoreEntitySet="Bill">
-                <ScalarProperty Name="IdBill" ColumnName="IdBill" />
-                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
-                <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
-                <ScalarProperty Name="IdEmloyee" ColumnName="IdEmloyee" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Discount_code" ColumnName="Discount_code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Bill_details">
-            <EntityTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.Bill_details">
+            <EntityTypeMapping TypeName="db_CanonStoreModel.Bill_details">
               <MappingFragment StoreEntitySet="Bill_details">
                 <ScalarProperty Name="IdBill" ColumnName="IdBill" />
                 <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
@@ -634,15 +621,28 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Bill_Status">
-            <EntityTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.Bill_Status">
+            <EntityTypeMapping TypeName="db_CanonStoreModel.Bill_Status">
               <MappingFragment StoreEntitySet="Bill_Status">
                 <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
                 <ScalarProperty Name="NameStatus" ColumnName="NameStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="db_CanonStoreModel.Bill">
+              <MappingFragment StoreEntitySet="Bills">
+                <ScalarProperty Name="IdBill" ColumnName="IdBill" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
+                <ScalarProperty Name="IdEmployee" ColumnName="IdEmployee" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Discount_code" ColumnName="Discount_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Comments">
-            <EntityTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.Comment">
+            <EntityTypeMapping TypeName="db_CanonStoreModel.Comment">
               <MappingFragment StoreEntitySet="Comments">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Id_Product" ColumnName="Id_Product" />
@@ -655,9 +655,9 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.Customer">
-              <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="id" ColumnName="id" />
+            <EntityTypeMapping TypeName="db_CanonStoreModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -671,7 +671,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Discounts">
-            <EntityTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.Discount">
+            <EntityTypeMapping TypeName="db_CanonStoreModel.Discount">
               <MappingFragment StoreEntitySet="Discounts">
                 <ScalarProperty Name="Dis_Code" ColumnName="Dis_Code" />
                 <ScalarProperty Name="Dis_Description" ColumnName="Dis_Description" />
@@ -681,9 +681,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Emloyees">
-            <EntityTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.Emloyee">
-              <MappingFragment StoreEntitySet="Emloyee">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="db_CanonStoreModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -697,9 +697,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Product_Types">
+            <EntityTypeMapping TypeName="db_CanonStoreModel.Product_Types">
+              <MappingFragment StoreEntitySet="Product_Types">
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.Product">
-              <MappingFragment StoreEntitySet="Product">
+            <EntityTypeMapping TypeName="db_CanonStoreModel.Product">
+              <MappingFragment StoreEntitySet="Products">
                 <ScalarProperty Name="Id_product" ColumnName="Id_product" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Brand" ColumnName="Brand" />
@@ -718,57 +726,49 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Product_Type">
-            <EntityTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.Product_Type">
-              <MappingFragment StoreEntitySet="Product_Type">
-                <ScalarProperty Name="IdType" ColumnName="IdType" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="proc_AVG_star_product" FunctionName="trangbaoduy2_OnlineCanonStoreModel.Store.proc_AVG_star_product">
+          <FunctionImportMapping FunctionImportName="proc_AVG_star_product" FunctionName="db_CanonStoreModel.Store.proc_AVG_star_product">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.proc_AVG_star_product_Result">
+              <ComplexTypeMapping TypeName="db_CanonStoreModel.proc_AVG_star_product_Result">
                 <ScalarProperty Name="Id_Product" ColumnName="Id_Product" />
                 <ScalarProperty Name="AVG_Star" ColumnName="AVG_Star" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="proc_sumproductbymonth" FunctionName="trangbaoduy2_OnlineCanonStoreModel.Store.proc_sumproductbymonth">
+          <FunctionImportMapping FunctionImportName="proc_sumproductbymonth" FunctionName="db_CanonStoreModel.Store.proc_sumproductbymonth">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.proc_sumproductbymonth_Result">
+              <ComplexTypeMapping TypeName="db_CanonStoreModel.proc_sumproductbymonth_Result">
                 <ScalarProperty Name="Product" ColumnName="Product" />
                 <ScalarProperty Name="Quality" ColumnName="Quality" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="proc_sumsalesbydate" FunctionName="trangbaoduy2_OnlineCanonStoreModel.Store.proc_sumsalesbydate">
+          <FunctionImportMapping FunctionImportName="proc_sumsalesbydate" FunctionName="db_CanonStoreModel.Store.proc_sumsalesbydate">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.proc_sumsalesbydate_Result">
+              <ComplexTypeMapping TypeName="db_CanonStoreModel.proc_sumsalesbydate_Result">
                 <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="proc_sumsalesbymonth" FunctionName="trangbaoduy2_OnlineCanonStoreModel.Store.proc_sumsalesbymonth">
+          <FunctionImportMapping FunctionImportName="proc_sumsalesbymonth" FunctionName="db_CanonStoreModel.Store.proc_sumsalesbymonth">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.proc_sumsalesbymonth_Result">
+              <ComplexTypeMapping TypeName="db_CanonStoreModel.proc_sumsalesbymonth_Result">
                 <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="proc_sumsalesbyyear" FunctionName="trangbaoduy2_OnlineCanonStoreModel.Store.proc_sumsalesbyyear">
+          <FunctionImportMapping FunctionImportName="proc_sumsalesbyyear" FunctionName="db_CanonStoreModel.Store.proc_sumsalesbyyear">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.proc_sumsalesbyyear_Result">
+              <ComplexTypeMapping TypeName="db_CanonStoreModel.proc_sumsalesbyyear_Result">
                 <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="proc_Top5bestsellingproduct" FunctionName="trangbaoduy2_OnlineCanonStoreModel.Store.proc_Top5bestsellingproduct">
+          <FunctionImportMapping FunctionImportName="proc_Top5bestsellingproduct" FunctionName="db_CanonStoreModel.Store.proc_Top5bestsellingproduct">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="trangbaoduy2_OnlineCanonStoreModel.proc_Top5bestsellingproduct_Result">
+              <ComplexTypeMapping TypeName="db_CanonStoreModel.proc_Top5bestsellingproduct_Result">
                 <ScalarProperty Name="Product" ColumnName="Product" />
                 <ScalarProperty Name="Quality" ColumnName="Quality" />
               </ComplexTypeMapping>

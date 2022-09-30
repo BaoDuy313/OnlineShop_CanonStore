@@ -165,9 +165,9 @@
     <Compile Include="Commom\Password.cs" />
     <Compile Include="Controllers\BillsController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DiscountsController.cs" />
-    <Compile Include="Controllers\EmloyeeController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -201,10 +201,10 @@
     <Compile Include="Models\Discount.cs">
       <DependentUpon>ModelDB_CanonStore.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Emloyee.cs">
+    <Compile Include="Models\EmloyeeCheck.cs" />
+    <Compile Include="Models\Employee.cs">
       <DependentUpon>ModelDB_CanonStore.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EmloyeeCheck.cs" />
     <Compile Include="Models\ItemCart.cs" />
     <Compile Include="Models\ModelDB_CanonStore.Context.cs">
       <AutoGen>True</AutoGen>
@@ -243,7 +243,7 @@
       <DependentUpon>ModelDB_CanonStore.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductsReport.cs" />
-    <Compile Include="Models\Product_Type.cs">
+    <Compile Include="Models\Product_Types.cs">
       <DependentUpon>ModelDB_CanonStore.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sumby.cs" />
@@ -355,15 +355,15 @@
     <Content Include="Views\Products\Detail.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Delete.cshtml" />
-    <Content Include="Views\Emloyee\Index.cshtml" />
-    <Content Include="Views\Emloyee\Create.cshtml" />
-    <Content Include="Views\Emloyee\Edit.cshtml" />
-    <Content Include="Views\Emloyee\Delete.cshtml" />
-    <Content Include="Views\Customer\Index.cshtml" />
-    <Content Include="Views\Customer\Detail.cshtml" />
-    <Content Include="Views\Customer\Edit.cshtml" />
-    <Content Include="Views\Customer\Delete.cshtml" />
-    <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\Customers\Detail.cshtml" />
+    <Content Include="Views\Customers\Edit.cshtml" />
+    <Content Include="Views\Customers\Delete.cshtml" />
+    <Content Include="Views\Customers\Create.cshtml" />
     <Content Include="Views\Bills\Index.cshtml" />
     <Content Include="Views\Bills\Edit.cshtml" />
     <Content Include="Views\Bills\Delete.cshtml" />

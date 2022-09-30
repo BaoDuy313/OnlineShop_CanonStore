@@ -6,7 +6,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
-    trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+    db_CanonStoreEntities ctx = new db_CanonStoreEntities();
 }
 
 <div class="main">
@@ -17,7 +17,7 @@
             @using (Html.BeginForm("Index", "Comments", FormMethod.Get))
             {
                 <p>
-                    Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @style = "font-size: 20px" })
+                    Find by Comment: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @style = "font-size: 20px" })
                     <input type="submit" value="Search" style="font-size: 20px;" />
                 </p>
             }
@@ -80,7 +80,7 @@
                     </td>
                     <td>
                         @{
-                            Customer customer = ctx.Customers.Where(c => c.id == (int)item.Id_Customer).FirstOrDefault();
+                            Customer customer = ctx.Customers.Where(c => c.Id == (int)item.Id_Customer).FirstOrDefault();
                         }
                         <p>@customer.Name</p>
                     </td>

@@ -14,7 +14,7 @@
     }
     else
     {
-       
+
         ViewBag.Dis_code = "";
         ViewBag.Dis_Value = 0;
     }
@@ -32,7 +32,7 @@
                 @*<input id="promo-code" type="text" name="promo-code" maxlength="10" class="promo-code-field">*@
                 <button class="promo-code-cta" onclick="myFunction()" type="submit">Apply</button>
             }
-       
+
         </div>
         <div class="basket-labels">
             <ul>
@@ -63,11 +63,11 @@
                 <div class="remove">
                     <button onclick="window.location.href='DeleteItemCart/@item.Producti.Id_product'">Remove</button>
                 </div>
-                
+
             </div>
         }
     </div>
-    @foreach (var item in Model)
+    @if (Model.Count > 0)
     {
         <aside>
             <div class="summary">
@@ -83,13 +83,7 @@
                     </div>
                 </div>
                 <div class="summary-delivery">
-                    @*<select name="delivery-collection" class="summary-delivery-selection">
-            <option value="0" selected="selected">Select Collection or Delivery</option>
-            <option value="collection">Collection</option>
-            <option value="first-class">Royal Mail 1st Class</option>
-            <option value="second-class">Royal Mail 2nd Class</option>
-            <option value="signed-for">Royal Mail Special Delivery</option>
-        </select>*@
+
                     <p>
                         Discount: @ViewBag.Dis_Value% <a href="~/Shop/DeleteDiscount">    <i class="fa fa-times" aria-hidden="true"></i></a>
                     </p>
@@ -117,5 +111,7 @@
             </div>
         </aside>
     }
+
+
 </main>
 

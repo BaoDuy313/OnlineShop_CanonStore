@@ -1,11 +1,11 @@
 ﻿@using CanonStore.Models
 @model List<CanonStore.Models.ItemCart>
 @{
-    trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+    db_CanonStoreEntities ctx = new db_CanonStoreEntities();
     ViewBag.Title = "Payment";
     Layout = "~/Views/Shared/_shopLayout.cshtml";
     int id = Convert.ToInt32(Session["CustomerId"]);
-    Customer customer = ctx.Customers.Where(c => c.id == id).SingleOrDefault();
+    Customer customer = ctx.Customers.Where(c => c.Id == id).SingleOrDefault();
     if (Session["Dis_code"] != null)
     {
 
@@ -58,7 +58,7 @@
             <h4>Adress: @customer.Address</h4>
         </div>
         <div class="col m-3">
-            <a href="~/Shop/CustomerEdit/@customer.id"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Change information</a>
+            <a href="~/Shop/CustomerEdit/@customer.Id"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Change information</a>
         </div>
         <hr />
         <h3>Bill</h3>

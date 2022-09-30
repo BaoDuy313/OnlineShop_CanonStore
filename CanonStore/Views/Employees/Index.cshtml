@@ -1,4 +1,4 @@
-﻿@model List<CanonStore.Models.Emloyee>
+﻿@model List<CanonStore.Models.Employee>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
@@ -6,7 +6,7 @@
 
 <div class="main">
     <h1>Emloyees</h1><br />
-    <a href="/Emloyee/Create" style="color:Highlight;">New Emloyee</a><br /><br />
+    <a href="/Employees/Create" style="color:Highlight;">New Emloyee</a><br /><br />
     <table class="table">
         <thead>
             <tr>
@@ -40,8 +40,8 @@
 
                     <td>
                         @*<a href="/Emloyee/Detail/@item.Id"><i class="fa fa-list" aria-hidden="true"></i></a> |*@
-                        <a href="~/Emloyee/Edit/@item.Id"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> |
-                        <a href="~/Emloyee/Delete/@item.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a href="~/Employees/Edit/@item.Id"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> |
+                        <a href="~/Employees/Delete/@item.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>
                     </td>
 
                 </tr>

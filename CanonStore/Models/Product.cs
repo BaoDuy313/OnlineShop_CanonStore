@@ -16,6 +16,7 @@ namespace CanonStore.Models
     using System.Collections.Generic;
     using System.ComponentModel;
 
+
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -59,16 +60,14 @@ namespace CanonStore.Models
         [DisplayName("Shutter Speed")]
         public string Shutter_Speed { get; set; }
         public bool Is_Available { get; set; }
-    
+
         public virtual Accessory Accessory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill_details> Bill_details { get; set; }
-        public virtual Product_Type Product_Type { get; set; }
+        public virtual Product_Types Product_Types { get; set; }
 
         [NotMapped]
         [DisplayName("ImageUpload")]
         public HttpPostedFileBase ImageUpload { get; set; }
-
-      
     }
 }

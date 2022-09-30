@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "ProductDetail";
     Layout = "~/Views/Shared/_shopLayout.cshtml";
-    trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+    db_CanonStoreEntities ctx = new db_CanonStoreEntities();
 }
 <style>
     .main {
@@ -91,13 +91,15 @@
         }
 </style>
 
-<div class="main">
-    <div class="container_detail">
-        <div class="detail_product">
-            <div class="detail_img">
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="img-box d-flex justify-content-center">
                 <img src="~/Content/images/@Model.Image" alt="">
+                </div>
             </div>
-            <div class="deltail">
+            <div class="col-md-6">
                 <div class="detail_info">
                     <p>@Model.Brand @Model.Name </p>
                     @*<p> @Model.Name</p>*@
@@ -127,11 +129,11 @@
                 }
             </div>
         </div>
-        <div class="detail_decription">
+        <div class="row p-md-3" style="background-color: #f3f1f3;">
             @{
-                Product_Type product_Type = ctx.Product_Type.Where(pt => pt.IdType == Model.Type).FirstOrDefault();
+                Product_Types product_Type = ctx.Product_Types.Where(pt => pt.IdType == Model.Type).FirstOrDefault();
             }
-            <div class="des_info">
+            <div class="col-md-6">
                 <p>Brand: @Model.Brand</p>
                 <p>Type: @product_Type.Name  </p>
                 <p>Accessory: @ViewBag.acc.Name_Acc</p>
@@ -139,7 +141,7 @@
                 <p>Focal Distance: @Model.Focal_Distance</p>
                 <p>Shutter Speed: @Model.Shutter_Speed</p>
             </div>
-            <div class="des_info">
+            <div class="col-md-6">
                 <p>Description:</p>
                 <p> @Model.Description</p>
             </div>
@@ -174,7 +176,7 @@
                                         <h5>
                                             @{
                                                 int id = com.Id_Customer;
-                                                Customer customer = ctx.Customers.Where(c => c.id == id).FirstOrDefault();
+                                                Customer customer = ctx.Customers.Where(c => c.Id == id).FirstOrDefault();
                                             }
                                             @customer.Name
                                         </h5>
@@ -207,7 +209,7 @@
     <div class="container">
         <div class="heading_container heading_center">
             <h2>
-                Camera
+                Product
             </h2>
         </div>
         <div class="row">

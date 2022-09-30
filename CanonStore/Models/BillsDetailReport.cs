@@ -12,7 +12,7 @@ namespace CanonStore.Models
 {
     public class BillsDetailReport
     {
-        trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+        db_CanonStoreEntities ctx = new db_CanonStoreEntities();
         #region Declaration
         int _totalColumn = 4;
         Document _document;
@@ -28,9 +28,9 @@ namespace CanonStore.Models
 
             List<Bill_details> bill_Details = ctx.Bill_details.Where(c => c.IdBill == id).ToList();
 
-            Customer customer = ctx.Customers.Where(c => c.id == bill.IdCustomer).SingleOrDefault();
+            Customer customer = ctx.Customers.Where(c => c.Id == bill.IdCustomer).SingleOrDefault();
 
-            Emloyee emloyee = ctx.Emloyees.Where(c => c.Id == bill.IdEmloyee).SingleOrDefault();
+            Employee employee = ctx.Employees.Where(c => c.Id == bill.IdEmployee).SingleOrDefault();
 
             _bill_Details = bill_Details;
 

@@ -164,7 +164,7 @@
                     <div class="card user-card-full">
                         @using (Html.BeginForm("CustomerUpdate", "Shop", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
-                            @Html.HiddenFor(m=>m.id)
+                            @Html.HiddenFor(m=>m.Id)
                             <div class="row m-l-0 m-r-0">
                                 <div class="col-sm-4 bg-c-lite-green user-profile">
                                     <div class="card-block text-center text-white">

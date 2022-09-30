@@ -18,12 +18,12 @@ namespace CanonStore.Controllers
     public class ProductsController : Controller
     {
         
-        trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+        db_CanonStoreEntities ctx = new db_CanonStoreEntities();
         // GET: Products
 
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -83,7 +83,7 @@ namespace CanonStore.Controllers
    
         public ActionResult Sales()
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -113,7 +113,7 @@ namespace CanonStore.Controllers
         [HttpPost]
         public ActionResult Sales(string search, string date)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 List<SumProduct> sumProducts = new List<SumProduct>();
                 try
@@ -177,13 +177,13 @@ namespace CanonStore.Controllers
         }
         public ActionResult Create()
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
                     Product product = new Product();
 
-                    List<Product_Type> product_Types = ctx.Product_Type.ToList();
+                    List<Product_Types> product_Types = ctx.Product_Types.ToList();
                     ViewBag.product_Types = product_Types;
 
                     List<Accessory> accessories = ctx.Accessories.ToList();
@@ -202,7 +202,7 @@ namespace CanonStore.Controllers
         [HttpPost]
         public ActionResult Create(Product product)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -228,7 +228,7 @@ namespace CanonStore.Controllers
                     }
                     else
                     {
-                        List<Product_Type> product_Types = ctx.Product_Type.ToList();
+                        List<Product_Types> product_Types = ctx.Product_Types.ToList();
                         ViewBag.product_Types = product_Types;
 
                         List<Accessory> accessories = ctx.Accessories.ToList();
@@ -248,7 +248,7 @@ namespace CanonStore.Controllers
         }
         public ActionResult Detail(int id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -266,11 +266,11 @@ namespace CanonStore.Controllers
         }
         public ActionResult Edit(int id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
-                    List<Product_Type> product_Types = ctx.Product_Type.ToList();
+                    List<Product_Types> product_Types = ctx.Product_Types.ToList();
                     ViewBag.product_Types = product_Types;
 
                     List<Accessory> accessories = ctx.Accessories.ToList();
@@ -293,7 +293,7 @@ namespace CanonStore.Controllers
         [HttpPost]
         public ActionResult Edit(Product product)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -347,11 +347,11 @@ namespace CanonStore.Controllers
         }
         public ActionResult Delete(int id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
-                    List<Product_Type> product_Types = ctx.Product_Type.ToList();
+                    List<Product_Types> product_Types = ctx.Product_Types.ToList();
                     ViewBag.product_Types = product_Types;
 
                     List<Accessory> accessories = ctx.Accessories.ToList();
@@ -373,7 +373,7 @@ namespace CanonStore.Controllers
         [HttpPost]
         public ActionResult DeleteConfirm(Product product)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -395,7 +395,7 @@ namespace CanonStore.Controllers
         }
         public ActionResult ExportExcel()
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 //List<Product> products = (List<Product>)Session["Product"];
                 List<Product> products = ctx.Products.OrderBy(p => p.Id_product).ToList();
@@ -416,7 +416,7 @@ namespace CanonStore.Controllers
                     
                     foreach (var product in products)
                     {
-                        Product_Type product_Type = ctx.Product_Type.Where(a => a.IdType == product.Type).FirstOrDefault();
+                        Product_Types product_Type = ctx.Product_Types.Where(a => a.IdType == product.Type).FirstOrDefault();
                         Accessory accessory = ctx.Accessories.Where(s => s.Id_Acc == product.Acc_Id).FirstOrDefault();
 
                         dt.Rows.Add(product.Id_product,product.Name,product.Brand,product.Price,product_Type.Name,accessory.Name_Acc,product.Warranty,product.Description,product.Date_Created);
@@ -446,7 +446,7 @@ namespace CanonStore.Controllers
         [HttpPost]
         public ActionResult ExportPDF()
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 //List<Product> products = (List<Product>)Session["Product"];
                 List<Product> products = ctx.Products.OrderBy(p => p.Id_product).ToList();

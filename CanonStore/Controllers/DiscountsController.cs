@@ -13,11 +13,11 @@ namespace CanonStore.Controllers
 {
     public class DiscountsController : Controller
     {
-        trangbaoduy2_OnlineCanonStoreEntities ctx = new trangbaoduy2_OnlineCanonStoreEntities();
+        db_CanonStoreEntities ctx = new db_CanonStoreEntities();
         // GET: Discounts
         public ActionResult Index()
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -35,7 +35,7 @@ namespace CanonStore.Controllers
         }
         public ActionResult Create()
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -56,7 +56,7 @@ namespace CanonStore.Controllers
         [HttpPost]
         public ActionResult Create(Discount discount)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -86,7 +86,7 @@ namespace CanonStore.Controllers
         }
         public ActionResult Edit(string id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -106,7 +106,7 @@ namespace CanonStore.Controllers
         [HttpPost]
         public ActionResult Edit(Discount discount)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -145,7 +145,7 @@ namespace CanonStore.Controllers
         }
         public ActionResult Delete(String id)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {
@@ -164,7 +164,7 @@ namespace CanonStore.Controllers
         [HttpPost]
         public ActionResult DeleteConfirm(Discount discount)
         {
-            if (Session["EmloyeeId"] != null)
+            if (Session["EmployeeId"] != null)
             {
                 try
                 {

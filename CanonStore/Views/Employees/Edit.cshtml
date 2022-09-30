@@ -1,4 +1,4 @@
-﻿@model CanonStore.Models.Emloyee
+﻿@model CanonStore.Models.Employee
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
@@ -9,7 +9,7 @@
         <h2>Edit Emloyee</h2>
         <div class="form_product">
 
-            @using (Html.BeginForm("Edit", "Emloyee", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("Edit", "Employees", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="row">
 
